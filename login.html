@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Миний Танилцуулга</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Нэвтрэх</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
@@ -14,22 +14,28 @@
         <li><a href="about.html">Миний тухай</a></li>
         <li><a href="portfolio.html">Төслүүд</a></li>
         <li><a href="contact.html">Холбоо барих</a></li>
-        <li><a href="login.html">Нэвтрэх</a></li>
+        <li><a href="login.html" class="active">Нэвтрэх</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <h1>Сайн байна уу, Намайг [Таны нэр] гэдэг</h1>
-      <p>Би вэб хөгжүүлэгч мэргэжлээр суралцаж байна</p>
+    <section class="content">
+      <h1>Админ нэвтрэх</h1>
+      <form action="login.php" method="POST">
+        <label for="username">Хэрэглэгчийн нэр:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Нууц үг:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Нэвтрэх</button>
+      </form>
     </section>
   </main>
 
   <footer>
     <p>&copy; 2025 Миний вэб. Бүх эрх хуулиар хамгаалагдсан.</p>
   </footer>
-
-  <script src="js/main.js"></script>
 </body>
 </html>

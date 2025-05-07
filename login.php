@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
-        header("Location: admin_dashboard/index.php");
+        header("Location: admin_dashboard.php");
         exit();
     } else {
         echo "Нэвтрэх нэр эсвэл нууц үг буруу!";

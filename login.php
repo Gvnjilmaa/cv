@@ -9,7 +9,7 @@ $password = $_POST['password'];
 
 if ($username === $correctUsername && $password === $correctPassword) {
     $_SESSION['admin'] = $username;
-    header("Location: admin/dashboard.php");
+    header("Location: admin_dashboard.php");
     exit();
 } else {
     echo "<script>alert('Нэвтрэх нэр эсвэл нууц үг буруу байна!'); window.location.href='login.html';</script>";

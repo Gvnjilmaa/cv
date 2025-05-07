@@ -1,9 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
+
+require 'db_connect.php';
+$result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +23,8 @@ if (!isset($_SESSION['admin'])) {
     <ul>
       <?php while ($row = $result->fetch_assoc()) { ?>
         <li>
-          <strong><?= $row['title'] ?></strong><br>
-          <?= $row['description'] ?><br>
+          <strong><?= htmlspecialchars($row['title']) ?></strong><br>
+          <?= nl2br(htmlspecialchars($row['description'])) ?><br>
           <a href="edit_project.php?id=<?= $row['id'] ?>">Засах</a> |
           <a href="delete_project.php?id=<?= $row['id'] ?>" onclick="return confirm('Устгах уу?');">Устгах</a>
         </li>

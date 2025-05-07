@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+    header("Location: login.php"); // Гарах үед буцааж нэвтрэх хэсэг рүү шилжих
     exit();
 }
 
@@ -14,7 +14,7 @@ $result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
 <head>
   <meta charset="UTF-8">
   <title>Админ - Төслүүд</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="content">

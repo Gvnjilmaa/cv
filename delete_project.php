@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.html");
+    header("Location: login.php"); // Хэрвээ админ биш бол нэвтрэх хэсэг рүү шилжих
     exit();
 }
 

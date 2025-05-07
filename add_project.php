@@ -1,22 +1,22 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
-    exit();
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
+    die("Энэ хуудас зөвхөн админд зориулагдсан!");
 }
-require 'db_connect.php';
+include 'db_project.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $title = htmlspecialchars($_POST['title']);
-    $desc = htmlspecialchars($_POST['description']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
 
     $stmt = $conn->prepare("INSERT INTO projects (title, description) VALUES (?, ?)");
-    $stmt->bind_param("ss", $title, $desc);
-    $stmt->execute();
-    $stmt->close();
+    $stmt->bind_param("ss", $title, $description);
 
-    header("Location: admin_dashboard.php");
-    exit();
+    if ($stmt->execute()) {
+        echo "Төсөл амжилттай нэмэгдлээ!";
+    } else {
+        echo "Алдаа гарлаа: " . $stmt->error;
+    }
 }
 ?>
 
@@ -25,56 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
   <meta charset="UTF-8">
   <title>Төсөл нэмэх</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 40px;
-    }
-
-    form {
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<form method="POST">
-  <h2>Төсөл нэмэх</h2>
-  <input type="text" name="title" placeholder="Гарчиг" required>
-  <textarea name="description" placeholder="Тайлбар" rows="5" required></textarea>
-  <button type="submit">Нэмэх</button>
+  <h2>Шинэ төсөл нэмэх</h2>
+  <form method="post" action="">
+    <input type="text" name="title" placeholder="Гарчиг" required>
+    <textarea name="description" placeholder="Тайлбар" required></textarea>
+    <button type="submit">Нэмэх</button>
 </form>
-
 </body>
 </html>

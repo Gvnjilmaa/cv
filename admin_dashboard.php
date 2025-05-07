@@ -1,12 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin'])) {
-    header("Location: login.php"); // Гарах үед буцааж нэвтрэх хэсэг рүү шилжих
-    exit();
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
+    die("Энэ хуудас зөвхөн админд зориулагдсан!");
 }
+include 'db_project.php';
 
-require 'db_connect.php';
-$result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
+$result = $conn->query("SELECT * FROM projects");
 ?>
 
 <!DOCTYPE html>
@@ -18,18 +17,16 @@ $result = $conn->query("SELECT * FROM projects ORDER BY id DESC");
 </head>
 <body>
   <main class="content">
-    <h1>Төслүүдийн жагсаалт</h1>
-    <a href="add_project.php">+ Шинэ төсөл нэмэх</a>
-    <ul>
-      <?php while ($row = $result->fetch_assoc()) { ?>
-        <li>
-          <strong><?= htmlspecialchars($row['title']) ?></strong><br>
-          <?= nl2br(htmlspecialchars($row['description'])) ?><br>
-          <a href="edit_project.php?id=<?= $row['id'] ?>">Засах</a> |
-          <a href="delete_project.php?id=<?= $row['id'] ?>" onclick="return confirm('Устгах уу?');">Устгах</a>
-        </li>
-      <?php } ?>
-    </ul>
+  <h2>Төслүүдийн жагсаалт</h2>
+<a href="add_project.php">+ Төсөл нэмэх</a>
+<ul>
+<?php while ($row = $result->fetch_assoc()): ?>
+    <li>
+        <strong><?= $row['title'] ?></strong> -
+        <a href="edit_project.php?id=<?= $row['id'] ?>">Засах</a>
+    </li>
+<?php endwhile; ?>
+</ul>
     <a href="logout.php">Гарах</a>
   </main>
 </body>

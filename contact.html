@@ -1,12 +1,41 @@
-<main>
-    <section class="content">
-      <h1>Холбоо барих</h1>
-      <p>Та надтай дараах аргаар холбогдож болно:</p>
-      <ul>
-        <li>📧 Имэйл: <a href="gvnjee.com">ta@example.com</a></li>
-        <li>📞 Утас: 86750580</li>
-        <li>🌐 LinkedIn: <a href="#">linkedin.com/in/taniner</a></li>
-      </ul>
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <title>Холбоо барих</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Холбоо барих</h1>
+    <nav>
+      <a href="index.html">Нүүр</a>
+      <a href="about.html">Миний тухай</a>
+      <a href="portfolio.html">Портфолио</a>
+      <a href="contact.html">Холбоо барих</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Минийтэй холбогдох</h2>
+      <form method="POST" action="send_message.php">
+        <label>Таны нэр:</label>
+        <input type="text" name="name" required><br>
+
+        <label>Имэйл:</label>
+        <input type="email" name="email" required><br>
+
+        <label>Зурвас:</label>
+        <textarea name="message" required></textarea><br>
+
+        <button type="submit">Илгээх</button>
+      </form>
     </section>
   </main>
-  
+
+  <footer>
+    <p>&copy; 2025 Миний Портфолио</p>
+  </footer>
+</body>
+</html>

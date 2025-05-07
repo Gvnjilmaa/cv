@@ -1,20 +1,24 @@
 <?php
 session_start();
+include 'db_project.php';
 
-$correctUsername = "admin";
-$correctPassword = "1111";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-// Хэрэв POST хүсэлт ирсэн бол нэвтрэх нэр болон нууц үгийг шалгах
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username=? AND password=?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($username === $correctUsername && $password === $correctPassword) {
-        $_SESSION['admin'] = $username; // Сессийг хадгалах
-        header("Location: admin_dashboard.php"); // Админ хуудас руу шилжих
+    if ($result->num_rows === 1) {
+        $user = $result->fetch_assoc();
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
+        header("Location: admin_dashboard/index.php");
         exit();
     } else {
-        $errorMessage = "Нэвтрэх нэр эсвэл нууц үг буруу байна!";
+        echo "Нэвтрэх нэр эсвэл нууц үг буруу!";
     }
 }
 ?>
@@ -22,43 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="mn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Нэвтрэх</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Нэвтрэх</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Нүүр</a></li>
-                <li><a href="about.html">Миний тухай</a></li>
-                <li><a href="portfolio.html">Төслүүд</a></li>
-                <li><a href="contact.html">Холбоо барих</a></li>
-                <li><a href="login.php" class="active">Нэвтрэх</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="content">
-            <h1>Админ нэвтрэх</h1>
-            <!-- Нэвтрэх хэсэг -->
-            <form action="login.php" method="POST">
-                <input type="text" name="username" placeholder="Нэвтрэх нэр" required>
-                <input type="password" name="password" placeholder="Нууц үг" required>
-                <button type="submit">Нэвтрэх</button>
-            </form> 
-            <?php
-            if (isset($errorMessage)) {
-                echo "<p style='color: red;'>$errorMessage</p>";
-            }
-            ?>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Миний вэб. Бүх эрх хуулиар хамгаалагдсан.</p>
-    </footer>
+  <h2>Нэвтрэх</h2>
+  <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
+  <form method="post" action="">
+    <input type="text" name="username" placeholder="Хэрэглэгчийн нэр" required>
+    <input type="password" name="password" placeholder="Нууц үг" required>
+    <button type="submit">Нэвтрэх</button>
+</form>
 </body>
 </html>

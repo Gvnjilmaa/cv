@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$db = 'cv';
-$user = 'gvnjee';
-$pass = '0727';
+$user = 'root';
+$pass = ''; // XAMPP default
+$db = 'cv'; // ← таны хэрэглэж буй өгөгдлийн сангийн нэр
 
 $conn = new mysqli($host, $user, $pass, $db);
 

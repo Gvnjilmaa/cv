@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_project.php';
+include 'db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
   <h2>Нэвтрэх</h2>
   <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
-  <form method="post" action="">
+  <form method="post" action="login.php">
     <input type="text" name="username" placeholder="Хэрэглэгчийн нэр" required>
     <input type="password" name="password" placeholder="Нууц үг" required>
     <button type="submit">Нэвтрэх</button>

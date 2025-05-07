@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     die("Энэ хуудас зөвхөн админд зориулагдсан!");
 }
-include 'db_project.php';
+include 'db_connect.php';
 
 $result = $conn->query("SELECT * FROM projects");
 ?>
